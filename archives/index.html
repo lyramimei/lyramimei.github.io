@@ -1,226 +1,47 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
-  
-  
-  <title>  Archives |   Lemon </title>
+extends includes/base
 
- 
-  
-    <link rel="icon" href="/images/favicon.png">
-  
+block content
+    div.al_index_background.dis_flex_center.al_full_cover
+        - var bio = config.bio || 'A Beautiful Text Site.'
+        - var firstBioChar = bio.substr(0, 1)
+        div.al_pos_ab.al_letter.al_index_background_letter= firstBioChar
+        h2.al_index_background_bio= bio
+    div.al_index_container
+        div.al_pos_ab.al_fake_background
+        div.al_main_container
+            div.al_section_container.dis_flex_jcenter
+                div.section_header= 'LATEST PAGES'
+            ur.al_post_list
+                each item in site.posts.sort('date', -1).toArray()
+                    - var postTitle = item.title || 'No Title'
+                    - var createDate = date(item.date, 'MMM DD')
+                    - var firstChar = postTitle.substr(0, 1)
+                    - var postURL = item.link || item.path
+                    - var excerpt = item.excerpt + '...' || 'No Excerpt'
+                    - var readLaterURL = 'https://getpocket.com/edit?url=' + encodeURIComponent(config.url + '/' + url_for(postURL))
+                    li.al_index_pageList_item.al_index_page_seperator
+                        div.al_index_post_title_cnt.dis_flex
+                            div.al_pos_ab.al_letter.al_index_post_title_letter= firstChar
+                            h2.al_index_post_title
+                                a(href=url_for(postURL))= postTitle
+                            div.al_index_post_extra.dis_flex
+                                div.al_index_post_date.al_index_post_extra_item= createDate
+                                div.al_index_post_read_time
+                                    |#{min2read(item.content)} Min Read
+                        div.al_index_post_excerpt_cnt
+                            p.al_index_post_excerpt= excerpt
+                        div.al_index_post_button_cnt.dis_flex
+                            a.al_button.al_button_red.al_index_post_button(href=url_for(postURL))= 'READ ON'
+                            a.al_button.al_button_white.al_index_post_button(href=readLaterURL)= 'READ LATER'
 
-
-  
-<link rel="stylesheet" href="/nayo.min.css">
- 
-<meta name="generator" content="Hexo 4.2.0"></head>  
-  <body>   
-    
-      <header class="header-wrapper">
-
-  <nav class="inner">
-    <div class="title">
-      <a href="/">
-        <img class="logo" src="/images/logo.png" />
-      </a>
-    </div>
-
-    <ul class="menu">
-      
-      
-      <li class="item">
-        <a class="link" id="menu-home" href="/">
-          <i class="iconfont icon-home" />
-        </a>
-      </li>
-      
-      
-      
-      <li class="item">
-        <a class="link" id="menu-archives" href="/archives">
-          <i class="iconfont icon-archives" />
-        </a>
-      </li>
-      
-      
-      
-      <li class="item">
-        <a class="link" id="menu-tags" href="/tags">
-          <i class="iconfont icon-tags" />
-        </a>
-      </li>
-      
-      
-      
-      <li class="item">
-        <a class="link" id="menu-about" href="/about">
-          <i class="iconfont icon-about" />
-        </a>
-      </li>
-      
-      
-      
-      <li class="item">
-        <a class="link" id="menu-search">
-          <i class="iconfont icon-search" />
-        </a>
-        </l>
-
-        
-      
-    </ul>
-  </nav>
-</header>
-
-<header class="mobile-header-wrapper">
-  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
-</header>   
-
-      <div class="container">       
-          
-          
-            <div class="container-inner slideDownMin">
-          
-
-          <section class="slideDownMin">
-
-  
-  
-<div class="page-name">
-    <i class="iconfont icon-page-archive"></i>
-    <span class="name">Archives</span>
-</div>
-
-
-
-  
-  
-
-  <div class="archive">
-    <ul class="archive-post">
-      
-
-      
-
-      
-
-      
-      <li class="archive-year">
-        <span class="year">
-          <span>2020</span>
-        </span>
-      </li>
-      
-      
-      <li class="archive-item">
-        <time class="time"> Mar 5th </time>
-        <span class="title"> <a href="/2020/03/05/%E7%AC%AC%E4%B8%80%E7%AF%87HEXO/">第一篇HEXO</a></span>
-      </li>
-
-      
-
-      
-
-      
-      <li class="archive-item">
-        <time class="time"> Mar 5th </time>
-        <span class="title"> <a href="/2020/03/05/hello-world/">Hello World</a></span>
-      </li>
-
-      
-    </ul>
-  </div>
-
-</section>
-
-
-
-          </div> 
-      </div>            
-    
-        <i id="toTop" class="iconfont icon-backtotop"></i>
-
-  
-    <div class="none" id="search">
-    <div class="header">
-        <input type="text" 
-        placeholder="Typing Something here." 
-        id="search-input" 
-        class="input" />
-        
-        <i id="search-cancel" class="iconfont icon-cancel"></i>
-    </div>
-
-    <div id="search-result" class="result"></div>
-</div>
-     <div class="mobile-menu">      
-
-      
-      <img class="mobile-menu-icon" src= "/images/favicon.png" >  
-      
-
-         
-            
-
-            <a class="mobile-menu-link" href="/">Home
-            </a>
-            
-         
-            
-
-            <a class="mobile-menu-link" href="/archives">Archives
-            </a>
-            
-         
-            
-
-            <a class="mobile-menu-link" href="/tags">Tags
-            </a>
-            
-         
-            
-
-            <a class="mobile-menu-link" href="/about">About
-            </a>
-            
-         
-                          
-
-            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
-            
-         
-      
-</div>
-        
-    
-
-
-
-     
-    
-
-
-<footer class="footer">
-	<div class="inner">
-		<div class="copyright">
-			&copy;
-			
-			2019 -
-			
-			2020
-			Lemon
-
-			<br/>
-			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
-		</div>
-	</div>
-</footer>   
-
-    
-<script src="/nayo.bundle.js"></script>
-           
-  </body>        
-</html>
+            nav.dis_flex.post-nav
+                span.prev
+                    if page.prev
+                        a(href=url_for(page.prev_link))
+                            span.arrow ←
+                            | Newer Posts
+                span.next
+                    if page.next
+                        a(href=url_for(page.next_link))
+                            | Older Posts
+                            span.arrow →
